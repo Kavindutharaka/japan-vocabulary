@@ -76,13 +76,13 @@
       const outputBox = document.getElementById('outputBox');
       
       searchInput.addEventListener('input', function() {
-        const inputValue = this.value.trim().toLowerCase();
+        const inputValue = this.value.trim();
         let suggestions = '';
 
         // Filter suggestions based on input value
         let count = 0;
         Object.keys(data).forEach(key => {
-          const word = key.toLowerCase();
+          const word = key.trim();
           if (word.includes(inputValue) && count < 5) {
             suggestions += `<li>${key}</li>`;
             count++;
@@ -102,7 +102,7 @@
       // Handle suggestion click
       suggestionsDiv.addEventListener('click', function(event) {
         const clickedWord = event.target.textContent;
-        outputBox.textContent = data[clickedWord];
+        outputBox.textContent = data[clickedWord.trim()];
         outputBox.style.display = 'block'; // Display the output box
         suggestionsDiv.style.display = 'none'; // Hide the suggestion box
       });
