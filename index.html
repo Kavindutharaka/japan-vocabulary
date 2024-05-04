@@ -47,11 +47,12 @@
       background-color: #f0f0f0;
     }
     .output-box {
-      margin-top: 40px;
+      margin-top: 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
       padding: 10px;
       background-color: #f9f9f9;
+      display: none; /* Initially hide output box */
     }
   </style>
 </head>
@@ -102,6 +103,8 @@
       suggestionsDiv.addEventListener('click', function(event) {
         const clickedWord = event.target.textContent;
         outputBox.textContent = data[clickedWord];
+        outputBox.style.display = 'block'; // Display the output box
+        suggestionsDiv.style.display = 'none'; // Hide the suggestion box
       });
 
       // Hide suggestions when clicked outside the search box
