@@ -46,6 +46,13 @@
     .suggestions li:hover {
       background-color: #f0f0f0;
     }
+    .output-box {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
   </style>
 </head>
 <body>
@@ -55,6 +62,7 @@
     <input type="text" id="searchInput" placeholder="Type to search...">
     <div class="suggestions" id="suggestions"></div>
   </div>
+  <div class="output-box" id="outputBox"></div>
 </div>
 
 <script>
@@ -64,16 +72,19 @@
     .then(data => {
       const searchInput = document.getElementById('searchInput');
       const suggestionsDiv = document.getElementById('suggestions');
+      const outputBox = document.getElementById('outputBox');
       
       searchInput.addEventListener('input', function() {
         const inputValue = this.value.trim().toLowerCase();
         let suggestions = '';
 
         // Filter suggestions based on input value
+        let count = 0;
         Object.keys(data).forEach(key => {
           const word = key.toLowerCase();
-          if (word.includes(inputValue)) {
-            suggestions += `<li>${key} : ${data[key]}</li>`;
+          if (word.includes(inputValue) && count < 5) {
+            suggestions += `<li>${key}</li>`;
+            count++;
           }
         });
 
@@ -85,6 +96,12 @@
           suggestionsDiv.innerHTML = '';
           suggestionsDiv.style.display = 'none';
         }
+      });
+
+      // Handle suggestion click
+      suggestionsDiv.addEventListener('click', function(event) {
+        const clickedWord = event.target.textContent;
+        outputBox.textContent = data[clickedWord];
       });
 
       // Hide suggestions when clicked outside the search box
